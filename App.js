@@ -1,20 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Provider } from 'react-redux';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+import ProductListScreen from './src/screens/ProductListScreen';
+import ProductDetailsScreen from './src/screens/ProductDetailsScreen';
+import AddProductScreen from './src/screens/AddProductScreen';
+import store from './src/redux/store';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const Stack = createStackNavigator();
+
+const App = () => {
+    return (
+        <Provider store={store}>
+            <NavigationContainer>
+                <Stack.Navigator initialRouteName="ProductList">
+                    <Stack.Screen
+                        name="ProductList"
+                        component={ProductListScreen}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name="ProductDetails"
+                        component={ProductDetailsScreen}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name="AddProduct"
+                        component={AddProductScreen}
+                        options={{ headerShown: false }}
+                    />
+                </Stack.Navigator>
+            </NavigationContainer>
+        </Provider>
+    );
+};
+
+export default App;
